@@ -189,7 +189,7 @@ class JointPositionControllerDual(JointController):
                 self.joint_state.current_pos = self.raw_to_rad(state.position, self.master_initial_position_raw, self.flipped, self.RADIANS_PER_ENCODER_TICK)
                 self.joint_state.error = state.error * self.RADIANS_PER_ENCODER_TICK
                 self.joint_state.velocity = state.speed * self.VELOCITY_PER_TICK
-                self.joint_state.load = state.load
+                self.joint_state.load = [state.load, states[self.slave_id].load]
                 self.joint_state.is_moving = state.moving
                 self.joint_state.header.stamp = rospy.Time.from_sec(state.timestamp)
                 self.joint_state_pub.publish(self.joint_state)
